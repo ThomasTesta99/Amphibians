@@ -24,7 +24,7 @@ fun AmbibiansApp() {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { AmphibainTopAppBar(scrollBehavior = scrollBehavior) }
+        topBar = { AmphibianTopAppBar(scrollBehavior = scrollBehavior) }
     ) {
         Surface(
             modifier = Modifier.fillMaxSize()
@@ -40,7 +40,7 @@ fun AmbibiansApp() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AmphibainTopAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier) {
+fun AmphibianTopAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier) {
     CenterAlignedTopAppBar(
         scrollBehavior = scrollBehavior,
         title = {

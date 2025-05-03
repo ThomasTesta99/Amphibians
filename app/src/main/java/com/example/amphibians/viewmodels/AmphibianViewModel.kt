@@ -39,6 +39,7 @@ class AmphibianViewModel(
         viewModelScope.launch {
             amphibianUiState = try{
                 val result = amphibianPhotoRepository.getAmphibianPhotos()
+                Log.d("VIEW MODEL", "getAmphibianPhotos: ${result.size}")
                 AmphibianUIState.Success(result)
             }catch (e:Exception){
                 Log.d("Amphibian View Model", "getAmphibianPhotos: ${e.message}")

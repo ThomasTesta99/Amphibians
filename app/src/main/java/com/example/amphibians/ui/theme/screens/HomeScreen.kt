@@ -5,12 +5,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +36,7 @@ fun HomeScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ){
     when(amphibianUIState){
-        is AmphibianUIState.Success -> AmphibianPhotos(amphibianUIState.photos)
+        is AmphibianUIState.Success -> AmphibianPhotos(amphibianUIState.photos, modifier.padding(top = contentPadding.calculateTopPadding()))
         is AmphibianUIState.Loading -> LoadingScreen()
         is AmphibianUIState.Error -> Error()
     }
@@ -52,27 +54,36 @@ fun LoadingScreen() {
 }
 
 @Composable
-fun AmphibianPhotos(photos: List<AmphibianPhoto>){
+fun AmphibianPhotos(photos: List<AmphibianPhoto>, modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(0.dp)){
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2)
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.padding(horizontal = 4.dp),
+        contentPadding = contentPadding,
     ) {
         items(items = photos, key = {photo -> photo.name} ){
-            photo -> AmphibianPhotoCard(photo)
+            photo -> AmphibianPhotoCard(photo, modifier = modifier
+            .padding(4.dp)
+            .fillMaxWidth()
+            .aspectRatio(1.5f))
         }
     }
 }
 
 @Composable
-fun AmphibianPhotoCard(photo : AmphibianPhoto){
-    AsyncImage(
-        model = ImageRequest.Builder(context = LocalContext.current)
-            .data(photo.imgSrc)
-            .crossfade(false)
-            .build(),
-        contentDescription = "",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxWidth()
-    )
+fun AmphibianPhotoCard(photo : AmphibianPhoto, modifier: Modifier){
+    Card(
+        modifier = modifier
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(context = LocalContext.current)
+                .data(photo.imgSrc)
+                .crossfade(false)
+                .build(),
+            contentDescription = "",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }
 
 @Composable
