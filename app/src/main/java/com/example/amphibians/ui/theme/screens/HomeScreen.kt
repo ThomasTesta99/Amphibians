@@ -114,10 +114,18 @@ fun AmphibianPhotoCard(photo: AmphibianPhoto) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = photo.name + "\n" + photo.type,
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                text = photo.name,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Type: " + photo.type,
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(modifier = Modifier.height(4.dp))
