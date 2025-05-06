@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -91,14 +92,30 @@ fun AmphibianPhotos(
 fun AmphibianPhotoCard(photo: AmphibianPhoto) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(12.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        shape = RoundedCornerShape(16.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
+            Text(
+                text = photo.name,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = "Type: " + photo.type,
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Spacer(modifier = Modifier.height(8.dp))
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(photo.imgSrc)
@@ -109,23 +126,8 @@ fun AmphibianPhotoCard(photo: AmphibianPhoto) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1.5f)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = photo.name,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Type: " + photo.type,
-                style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth(),
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.LightGray)
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -136,5 +138,25 @@ fun AmphibianPhotoCard(photo: AmphibianPhoto) {
                 modifier = Modifier.fillMaxWidth()
             )
         }
+    }
+}
+
+@Composable
+fun Error(){
+    Column(
+        modifier = Modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_connection_error),
+            contentDescription = ""
+        )
+        Text(
+            text = stringResource(R.string.loading_failed),
+            modifier = Modifier.padding(16.dp)
+        )
+
+
     }
 }
